@@ -1,6 +1,7 @@
 ---
 - name: "Add the PHP 5.6 repository"
   apt_repository: repo='deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main' state=present
+  become: yes
 
 - name: "Install MySQL"
   apt:
