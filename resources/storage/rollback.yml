@@ -1,0 +1,8 @@
+---
+- name: Rollback app
+  hosts: all
+  vars:
+    ansistrano_deploy_to: "/home/ubuntu/storage"
+    ansistrano_remove_rolled_back: yes
+  roles:
+    - carlosbuenosvinos.ansistrano-rollback

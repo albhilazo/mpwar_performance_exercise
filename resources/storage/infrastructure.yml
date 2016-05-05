@@ -1,0 +1,32 @@
+---
+- name: "Install MySQL"
+  apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+    force: yes
+  become: yes
+  become_user: root
+
+- name: "Install Redis"
+  apt:
+    name: redis-server
+    state: present
+    update_cache: yes
+    force: yes
+  become: yes
+  become_user: root
+
+- name: "Start the MySQL service"
+  service:
+    name: mysql
+    state: started
+    enabled: true
+  become: yes
+
+- name: "Start the Redis service"
+  service:
+    name: redis-server
+    state: started
+    enabled: true
+  become: yes
