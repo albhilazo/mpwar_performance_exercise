@@ -56,5 +56,15 @@ class DomainServiceProvider implements ServiceProviderInterface
         $app['controllers.home'] = function () use ($app) {
             return new \Performance\Controller\HomeController($app['twig'], $app['useCases.listArticles']);
         };
+        $app['predis.client'] = function () use ($app) {
+            return new \Predis\Client([
+                'scheme' => $app['redis.options']['scheme'],
+                'host'   => $app['redis.options']['host'],
+                'port'   => $app['redis.options']['port']
+            ]);
+        };
+        $app['session.storage.handler'] = function () use ($app) {
+            return new \Predis\Session\Handler($app['predis.client']);
+        };
     }
 }
