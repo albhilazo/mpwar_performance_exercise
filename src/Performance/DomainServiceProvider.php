@@ -26,11 +26,15 @@ class DomainServiceProvider implements ServiceProviderInterface
         };
 
         $app['useCases.readArticle'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\ReadArticle($app['orm.em']->getRepository('Performance\Domain\Article'));
+            return new \Performance\Domain\UseCase\ReadArticle($app['orm.em']->getRepository('Performance\Domain\Article'), $app['ranking.repository']);
         };
 
         $app['useCases.listArticles'] = function () use ($app) {
             return new \Performance\Domain\UseCase\ListArticles($app['orm.em']->getRepository('Performance\Domain\Article'));
+        };
+        
+        $app['useCases.getRanking'] = function () use ($app) {
+            return new \Performance\Domain\UseCase\GetRanking($app['ranking.repository'], $app['orm.em']->getRepository('Performance\Domain\Article'));
         };
 
         $app['controllers.readArticle'] = function () use ($app) {
@@ -54,8 +58,9 @@ class DomainServiceProvider implements ServiceProviderInterface
         };
 
         $app['controllers.home'] = function () use ($app) {
-            return new \Performance\Controller\HomeController($app['twig'], $app['useCases.listArticles']);
+            return new \Performance\Controller\HomeController($app['twig'], $app['useCases.listArticles'], $app['session'], $app['useCases.getRanking']);
         };
+        
         $app['predis.client'] = function () use ($app) {
             return new \Predis\Client([
                 'scheme' => $app['redis.options']['scheme'],
@@ -63,8 +68,13 @@ class DomainServiceProvider implements ServiceProviderInterface
                 'port'   => $app['redis.options']['port']
             ]);
         };
+        
         $app['session.storage.handler'] = function () use ($app) {
             return new \Predis\Session\Handler($app['predis.client']);
         };
+
+        $app['ranking.repository'] = function () use ($app) {
+            return new \Performance\Infrastructure\RedisRankingRepository($app['predis.client']);
+        };     
     }
 }
