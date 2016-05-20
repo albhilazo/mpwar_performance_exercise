@@ -14,7 +14,10 @@
   "homepage": "http://getbootstrap.com",
   "author": "Twitter, Inc.",
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "build:css": "catw -c 'lessc -' 'less/*.less' > ../../styles/styles.css",
+    "minify:css": "uglifyjs ../../assets/styles/styles.css --compress --mangle > ../../assets/styles/styles.min.css",
+    "build": "npm run build:css && npm run minify:css"
   },
   "style": "dist/css/bootstrap.css",
   "less": "less/bootstrap.less",
@@ -29,6 +32,9 @@
   "license": {
     "type": "MIT",
     "url": "https://github.com/twbs/bootstrap/blob/master/LICENSE"
+  },
+  "dependencies": {
+    "less": "~1.5.1"
   },
   "devDependencies": {
     "btoa": "~1.1.2",
@@ -58,7 +64,10 @@
     "load-grunt-tasks": "~1.0.0",
     "npm-shrinkwrap": "~4.0.0",
     "remarkable": "^1.2.2",
-    "time-grunt": "~1.0.0"
+    "time-grunt": "~1.0.0",
+    "catw": "~0.2.0",
+    "less": "~2.6.1",
+    "uglify-js": "^2.6.1"
   },
   "engines": {
     "node": "~0.10.1"
