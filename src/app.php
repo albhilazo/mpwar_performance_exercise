@@ -10,12 +10,12 @@ use Silex\Provider\SessionServiceProvider;
 
 $app = new Application();
 
-$app->register(new Performance\DomainServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new TwigServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new DoctrineServiceProvider);
 $app->register(new DoctrineOrmServiceProvider);
+$app->register(new Performance\DomainServiceProvider());
 
 return $app;

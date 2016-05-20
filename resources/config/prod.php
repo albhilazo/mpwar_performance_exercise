@@ -24,3 +24,8 @@ $app['orm.em.options'] = [
         ],
     ]
 ];
+$app['redis.options'] = [
+    "scheme" => "tcp",
+    "host"   => "127.0.0.1",
+    "port"   => 6379
+];

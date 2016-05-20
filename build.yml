@@ -1,0 +1,8 @@
+---
+
+- name: "Build project dependencies"
+  shell: composer install
+  connection: local
+
+- name: "Installing db"
+  shell: mysql -u root < /var/www/html/current/mpwar_performance_exercise/resources/dataset.sql

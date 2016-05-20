@@ -1,0 +1,48 @@
+---
+- name: "Add the PHP 5.6 repository"
+  apt_repository: repo='deb http://ppa.launchpad.net/ondrej/php5-5.6/ubuntu trusty main' state=present
+
+- name: "Install MySQL"
+  apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+    force: yes
+  become: yes
+  become_user: root
+
+- name: "Install PHP5"
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+    force: yes
+  become: yes
+  become_user: root
+  with_items:
+    - php5
+    - php5-mysql
+
+- name: "Install Apache2"
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+    force: yes
+  become: yes
+  become_user: root
+
+- name: "Start the MySQL service"
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: "Ubuntu user is the owner of /var/www/html"
+  file:
+    path: /var/www/html
+    owner: ubuntu
+    group: ubuntu
+    mode: 0755
+  become: yes
+  become_user: root

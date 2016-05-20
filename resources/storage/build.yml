@@ -1,0 +1,9 @@
+---
+
+- name: "Installing db"
+  shell: mysql -u root < /home/ubuntu/storage/current/storage/dataset.sql
+  become: yes
+
+- name: "configuring bind-adresses"
+  shell: bash /home/ubuntu/storage/current/storage/settings.sh
+  become: yes
