@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Performance\Domain\UseCase\SignUp;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use League\Flysystem\Filesystem;
+use League\Flysystem\Adapter\Local;
+
 class RegisterController
 {
     /**
@@ -44,6 +47,21 @@ class RegisterController
     {
     	$username = $request->request->get('username');
     	$password = $request->request->get('password');
+        $image    = $request->files->get('image');
+
+        $filename = $username.'.'.$image->getClientOriginalExtension();
+
+        $adapter = new Local(__DIR__.'/../../../web/img');
+        $fs = new Filesystem($adapter);
+
+        if ($fs->has($filename)) {
+            $fs->delete($filename);
+        }
+
+        $fs->writeStream(
+            $filename,
+            fopen($image->getRealPath(), 'r')
+        );
 
     	$this->useCase->execute($username, $password);
 
