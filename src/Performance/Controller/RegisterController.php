@@ -50,7 +50,7 @@ class RegisterController
     	$password = $request->request->get('password');
         $image    = $request->files->get('image');
 
-        $filename = $username.'.'.$image->getClientOriginalExtension();
+        $filename = $username.'.png';
 
         $client = new S3Client([
             'region' => 'eu-west-1',
