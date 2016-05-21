@@ -1,2 +1,4 @@
 vendor/
 deploy.retry
+web/assets/components/bootstrap/node_modules
+*npm-debug.log

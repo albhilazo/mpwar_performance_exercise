@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<body>
-    <h1>Write Article</h1>
-
-    <form action="{{ path('writeArticle') }}" method="POST">
-        Title <br />
-        <input type="text" name="title" id="title" /> <br />
-        Text <br />
-        <textarea name="content" id="content" style="width: 300px; height: 150px;"></textarea>
-        <br />
-        <input type="submit" value="Save" />
-    </form>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ app.assets_path }}/styles/styles.min.css"/>
+</head>
+<body class="container">
+<h1 class="row">Write Article</h1>
+​
+<form class="form-horizontal col-md-6" action="{{ path('writeArticle') }}" method="POST">
+    Title
+    <input class="form-control" type="text" name="title" id="title"/> <br/>
+    Text
+    <textarea class="form-control" name="content" id="content" rows="12"></textarea>
+    <br/>
+    <input type="submit" value="Save" class="btn btn-default"/>
+</form>
 </body>
+</html>

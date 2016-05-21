@@ -7,9 +7,9 @@ $app['twig.options'] = [];
 
 $app['db.options'] = [
     "driver"    => "pdo_mysql",
-    "host"      => 'localhost',
+    "host"      => '127.0.0.1',
     "user"      => 'root',
-    "password"  => '',
+    "password"  => 'vagrantpass',
     "dbname"    => 'mpwar_performance_blog',
     "charset"   => "utf8"
 ];
@@ -24,3 +24,9 @@ $app['orm.em.options'] = [
         ],
     ]
 ];
+$app['redis.options'] = [
+    "scheme" => "tcp",
+    "host"   => "127.0.0.1",
+    "port"   => 6379
+];
+$app['assets_path'] = 'http://performance.dev/mpwar_performance_exercise/web/assets';

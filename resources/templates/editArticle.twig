@@ -1,14 +1,19 @@
 <!DOCTYPE html>
+<html>
+<head>
     <meta charset="UTF-8">
-    <body>
-        <form method="POST" action="{{ path('editArticle', {article_id: article.id}) }}">
-            Title <br />
-            <input type="text" name="title" id="title" value="{{ article.title }}" /> <br />
-            <input type="hidden" name="article_id" id="article_id" value="{{ article.id }}" /> <br />
-            Text <br />
-            <textarea name="content" id="content" style="width: 300px; height: 150px;"> {{ article.content }}</textarea>
-            <br />
-            <input type="submit" value="Save" />
-        </form>
-    </body>
+    <link rel="stylesheet" href="{{ app.assets_path }}/styles/styles.min.css"/>
+</head>
+<body class="container">
+<h1 class="row">Editing Article</h1>
+<form class="form-horizontal col-md-6"  method="POST" action="{{ path('editArticle', {article_id: article.id}) }}">
+    Title
+    <input type="text" class="form-control" name="title" id="title" value="{{ article.title }}" /> <br />
+    <input type="hidden" name="article_id" id="article_id" value="{{ article.id }}" /> <br />
+    Text
+    <textarea name="content" class="form-control" id="content" rows="12"> {{ article.content }}</textarea>
+    <br />
+    <input type="submit" value="Save" class="btn btn-default"/>
+</form>
+</body>
 </html>
