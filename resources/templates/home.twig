@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-	<head>
-		<title>Blog</title>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="{{ app.assets_path }}/styles/styles.min.css"/>
-	</head>
-	<body>
-		<div>
-			<h1>Global Top 5 Ranking</h1>
-				<ol>
-					{% for article in globalRanking %}
-						<li>{{ article.title | title }}</li>
-					{% else %}
-						<b>There are no articles in the top 5</b>
-					{% endfor %}
-				</ol>
-		</div>
-		{% if userRanking %}
-		<div>
-			<h1>User Top 5 Ranking</h1>
-			<ol>
-				{% for article in userRanking %}
-					<li>{{ article.title | title }}</li>
-				{% else %}
-					<b>There are no articles in the top 5</b>
-				{% endfor %}
-			</ol>
-		</div>
-		{% endif %}
-		<div>
-			{% for article in articles %}
-				<h1><a href="{{ path('article', {article_id: article.id}) }}">{{ article.title | title }}</a></h1>
-				<h3>by {{ article.author.username }}, on {{ article.date | date("d/m/Y H:i") }}</h3>
-				<p>
-				{% if article.content | length > 100 %}
-					{{ article.content | slice(0,100) }}
-					<a href="{{ path('article', {article_id: article.id}) }}">more&hellip;</a>
-				{% else %}
-						{{ article.content }}
-				{% endif %}
-				</p>
-			{% else %}
-				<h1>There are no articles to show</h1>
-			{% endfor %}
-		</div>
-	</body>
+<html>
+<head>
+    <title>Blog</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ app.assets_path }}/styles/styles.min.css"/>
+</head>
+<body class="container">
+<div class="row">
+    <div class="col-md-6">
+        <h1>Global Top 5 Ranking</h1>
+        <ol>
+            {% for article in globalRanking %}
+                <li>{{ article.title | title }}</li>
+            {% else %}
+                <b>There are no articles in the top 5</b>
+            {% endfor %}
+        </ol>
+    </div>
+    {% if userRanking %}
+        <div class="col-md-6">
+            <h1>User Top 5 Ranking</h1>
+            <ol>
+                {% for article in userRanking %}
+                    <li>{{ article.title | title }}</li>
+                {% else %}
+                    <b>There are no articles in the top 5</b>
+                {% endfor %}
+            </ol>
+        </div>
+    {% endif %}
+</div>
+<div>
+    {% for article in articles %}
+        <h1><a href="{{ path('article', {article_id: article.id}) }}">{{ article.title | title }}</a></h1>
+        <h3>by {{ article.author.username }}, on {{ article.date | date("d/m/Y H:i") }}</h3>
+        <p>
+            {% if article.content | length > 100 %}
+                {{ article.content | slice(0,100) }}
+                <a href="{{ path('article', {article_id: article.id}) }}">more&hellip;</a>
+            {% else %}
+                {{ article.content }}
+            {% endif %}
+        </p>
+    {% else %}
+        <h1>There are no articles to show</h1>
+    {% endfor %}
+</div>
+</body>
 </html>

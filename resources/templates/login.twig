@@ -3,20 +3,20 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ app.assets_path }}/styles/styles.min.css"/>
 </head>
-<body>
-    <h1>Login</h1>
-
-    <form action="{{ path('login') }}" method="POST">
-        <fieldset>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required />
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required />
-        </fieldset>
-
-        <fieldset class="form-actions">
-            <input type="submit" value="Login" />
-        </fieldset>
-    </form>
+<body class="container">
+<h1 class="row">Login</h1>
+​
+<form class="form-horizontal col-md-6" action="{{ path('login') }}" method="POST">
+    <fieldset class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required size="6"/>
+        ​
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required size="6" />
+    </fieldset>
+    ​
+    <fieldset class="form-actions form-group">
+        <input type="submit" value="Login" class="btn btn-default"/>
+    </fieldset>
+</form>
 </body>
