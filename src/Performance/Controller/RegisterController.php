@@ -51,7 +51,7 @@ class RegisterController
 
         $filename = $username.'.'.$image->getClientOriginalExtension();
 
-        $adapter = new Local(__DIR__.'/../../../web/img');
+        $adapter = new Local(__DIR__.'/../../../web/assets/img');
         $fs = new Filesystem($adapter);
 
         if ($fs->has($filename)) {
