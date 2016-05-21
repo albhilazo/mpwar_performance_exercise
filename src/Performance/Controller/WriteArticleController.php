@@ -44,7 +44,11 @@ class WriteArticleController
             return new RedirectResponse($this->url_generator->generate('login'));
         }
 
-        return new Response($this->template->render('writeArticle.twig'));
+        return new Response(
+            $this->template->render('writeArticle.twig'),
+            200,
+            [ 'Cache-Control' => 's-maxage=300, private' ]
+        );
     }
 
     public function post(Request $request)

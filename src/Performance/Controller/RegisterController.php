@@ -33,7 +33,11 @@ class RegisterController
 
     public function get()
     {
-        return new Response($this->template->render('register.twig'));
+        return new Response(
+            $this->template->render('register.twig'),
+            200,
+            [ 'Cache-Control' => 's-maxage=300, private' ]
+        );
     }
 
     public function post(Request $request)

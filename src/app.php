@@ -7,6 +7,7 @@ use Silex\Provider\ServiceControllerServiceProvider;
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SessionServiceProvider;
+use Silex\Provider\HttpCacheServiceProvider;
 
 $app = new Application();
 
@@ -17,5 +18,17 @@ $app->register(new ServiceControllerServiceProvider());
 $app->register(new DoctrineServiceProvider);
 $app->register(new DoctrineOrmServiceProvider);
 $app->register(new Performance\DomainServiceProvider());
+$app->register(new HttpCacheServiceProvider(), [
+    'http_cache.esi'       => null,
+    'http_cache.options'   => [
+        'debug'                  => false,
+        'default_ttl'            => 20,
+        'private_headers'        => ['Authorization', 'Cookie'],
+        'allow_reload'           => false,
+        'allow_revalidate'       => false,
+        'stale_while_revalidate' => 2,
+        'stale_if_error'         => 60
+    ]
+]);
 
 return $app;

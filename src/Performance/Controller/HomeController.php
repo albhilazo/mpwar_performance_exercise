@@ -46,10 +46,14 @@ class HomeController
         $ranking = $this->getRanking->execute($this->session->get('author_id', null));
         $articles = $this->useCase->execute();
         
-        return new Response($this->template->render('home.twig', [
-            'globalRanking' => $ranking->getGlobalRanking(),
-            'userRanking' => $ranking->getUserRanking(),
-            'articles' => $articles
-        ]));
+        return new Response(
+            $this->template->render('home.twig', [
+                'globalRanking' => $ranking->getGlobalRanking(),
+                'userRanking' => $ranking->getUserRanking(),
+                'articles' => $articles
+            ]),
+            200,
+            [ 'Cache-Control' => 's-maxage=300, private' ]
+        );
     }
 }

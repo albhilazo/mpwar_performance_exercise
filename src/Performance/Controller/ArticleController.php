@@ -31,6 +31,10 @@ class ArticleController
             throw new HttpException(404, "Article $article_id does not exist.");
         }
 
-        return new Response($this->template->render('article.twig', ['article' => $article]));
+        return new Response(
+            $this->template->render('article.twig', ['article' => $article]),
+            200,
+            [ 'Cache-Control' => 's-maxage=300, private' ]
+        );
     }
 }

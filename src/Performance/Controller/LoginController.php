@@ -52,7 +52,11 @@ class LoginController
 
     public function get()
     {
-        return new Response($this->template->render('login.twig'));
+        return new Response(
+            $this->template->render('login.twig'),
+            200,
+            [ 'Cache-Control' => 's-maxage=300, private' ]
+        );
     }
 
     public function logout()

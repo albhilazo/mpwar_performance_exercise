@@ -52,7 +52,11 @@ class EditArticleController
         }
 
         $article = $this->readArticle->execute($article_id);
-        return new Response($this->template->render('editArticle.twig', ['article' => $article]));
+        return new Response(
+            $this->template->render('editArticle.twig', ['article' => $article]),
+            200,
+            [ 'Cache-Control' => 's-maxage=0, private' ]
+        );
     }
 
     public function post(Request $request)
