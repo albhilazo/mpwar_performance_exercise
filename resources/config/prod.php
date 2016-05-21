@@ -29,3 +29,4 @@ $app['redis.options'] = [
     "host"   => "127.0.0.1",
     "port"   => 6379
 ];
+$app['assets_path'] = 'http://performance.dev/mpwar_performance_exercise/web/assets';
