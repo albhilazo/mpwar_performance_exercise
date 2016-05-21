@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Performance\Domain\UseCase\SignUp;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use Aws\S3\S3Client;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
 
 class RegisterController
 {
@@ -51,8 +52,13 @@ class RegisterController
 
         $filename = $username.'.'.$image->getClientOriginalExtension();
 
-        $adapter = new Local(__DIR__.'/../../../web/assets/img');
-        $fs = new Filesystem($adapter);
+        $client = new S3Client([
+            'region' => 'eu-west-1',
+            'version' => 'latest',
+        ]);
+
+        $aws3adapter = new AwsS3Adapter($client, 'mpwarperf');
+        $fs = new Filesystem($aws3adapter);
 
         if ($fs->has($filename)) {
             $fs->delete($filename);
