@@ -7,3 +7,5 @@
  - The registration form offers the option to upload a profile image, which will be stored in Amazon S3 and loaded in the home and article pages.
  - Cache headers with a maximum age have been specified for each page.
  - Configuration parameters are specified in `resources/config/parameters.php`, which can be initialized copying the `parameters_tpl.php` file.
+
+Diary documents, AB and Blackfire screenshots and an Excel document with all data can be found in the `journals` folder.
