@@ -38,7 +38,7 @@
     {% for article in articles %}
         <div class="col-xs-1">
             <a href="#">
-                <img src="{{ app.assets_path }}/img/{{ article.author.username }}.png" height="50px" width="50px">
+                <img src="{{ app.img_path }}/{{ article.author.username }}.png" height="50px" width="50px">
             </a>
         </div>
         <h1><a href="{{ path('article', {article_id: article.id}) }}">{{ article.title | title }}</a></h1>
