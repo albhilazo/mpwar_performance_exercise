@@ -54,7 +54,7 @@ class DomainServiceProvider implements ServiceProviderInterface
         };
 
         $app['controllers.signUp'] = function () use ($app) {
-            return new \Performance\Controller\RegisterController($app['twig'], $app['url_generator'], $app['useCases.signUp']);
+            return new \Performance\Controller\RegisterController($app['twig'], $app['url_generator'], $app['useCases.signUp'], $app['filesystem.handler']);
         };
 
         $app['controllers.home'] = function () use ($app) {
@@ -67,6 +67,21 @@ class DomainServiceProvider implements ServiceProviderInterface
                 'host'   => $app['redis.options']['host'],
                 'port'   => $app['redis.options']['port']
             ]);
+        };
+
+        $app['s3.client'] = function () use ($app) {
+            return new \Aws\S3\S3Client([
+                'region'  => 'eu-west-1',
+                'version' => 'latest',
+            ]);
+        };
+
+        $app['filesystem.adapter'] = function () use ($app) {
+            return new \League\Flysystem\AwsS3v3\AwsS3Adapter($app['s3.client'], 'mpwarperf');
+        };
+
+        $app['filesystem.handler'] = function () use ($app) {
+            return new \League\Flysystem\Filesystem($app['filesystem.adapter']);
         };
         
         $app['session.storage.handler'] = function () use ($app) {

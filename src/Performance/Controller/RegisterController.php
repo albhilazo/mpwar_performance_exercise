@@ -7,10 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Performance\Domain\UseCase\SignUp;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
-use Aws\S3\S3Client;
-use League\Flysystem\Filesystem;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\FilesystemInterface;
 
 class RegisterController
 {
@@ -29,10 +26,16 @@ class RegisterController
      */
     private $useCase;
 
-    public function __construct(\Twig_Environment $templating, UrlGeneratorInterface $url_generator, SignUp $useCase) {
+    /**
+     * @var FilesystemInterface
+     */
+    private $fs;
+
+    public function __construct(\Twig_Environment $templating, UrlGeneratorInterface $url_generator, SignUp $useCase, FilesystemInterface $fs) {
         $this->template = $templating;
         $this->url_generator = $url_generator;
         $this->useCase = $useCase;
+        $this->fs = $fs;
     }
 
     public function get()
@@ -52,19 +55,11 @@ class RegisterController
 
         $filename = $username.'.png';
 
-        $client = new S3Client([
-            'region' => 'eu-west-1',
-            'version' => 'latest',
-        ]);
-
-        $aws3adapter = new AwsS3Adapter($client, 'mpwarperf');
-        $fs = new Filesystem($aws3adapter);
-
-        if ($fs->has($filename)) {
-            $fs->delete($filename);
+        if ($this->fs->has($filename)) {
+            $this->fs->delete($filename);
         }
 
-        $fs->writeStream(
+        $this->fs->writeStream(
             $filename,
             fopen($image->getRealPath(), 'r')
         );
