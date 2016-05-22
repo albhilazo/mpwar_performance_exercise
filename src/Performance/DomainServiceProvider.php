@@ -14,27 +14,27 @@ class DomainServiceProvider implements ServiceProviderInterface
         };
 
         $app['useCases.login'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\Login($app['orm.em']->getRepository('Performance\Domain\Author'), $app['session']);
+            return new \Performance\Domain\UseCase\Login($app['author.repository.cached'], $app['session']);
         };
 
         $app['useCases.writeArticle'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\WriteArticle($app['orm.em']->getRepository('Performance\Domain\Article'), $app['orm.em']->getRepository('Performance\Domain\Author'), $app['session']);
+            return new \Performance\Domain\UseCase\WriteArticle($app['article.repository.cached'], $app['author.repository.cached'], $app['session']);
         };
 
         $app['useCases.editArticle'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\EditArticle($app['orm.em']->getRepository('Performance\Domain\Article'), $app['orm.em']->getRepository('Performance\Domain\Author'), $app['session']);
+            return new \Performance\Domain\UseCase\EditArticle($app['article.repository.cached'], $app['author.repository.cached'], $app['session']);
         };
 
         $app['useCases.readArticle'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\ReadArticle($app['orm.em']->getRepository('Performance\Domain\Article'), $app['ranking.repository']);
+            return new \Performance\Domain\UseCase\ReadArticle($app['article.repository.cached'], $app['ranking.repository']);
         };
 
         $app['useCases.listArticles'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\ListArticles($app['orm.em']->getRepository('Performance\Domain\Article'));
+            return new \Performance\Domain\UseCase\ListArticles($app['article.repository.cached']);
         };
         
         $app['useCases.getRanking'] = function () use ($app) {
-            return new \Performance\Domain\UseCase\GetRanking($app['ranking.repository'], $app['orm.em']->getRepository('Performance\Domain\Article'));
+            return new \Performance\Domain\UseCase\GetRanking($app['ranking.repository'], $app['article.repository.cached']);
         };
 
         $app['controllers.readArticle'] = function () use ($app) {
@@ -75,6 +75,14 @@ class DomainServiceProvider implements ServiceProviderInterface
 
         $app['ranking.repository'] = function () use ($app) {
             return new \Performance\Infrastructure\RedisRankingRepository($app['predis.client']);
-        };     
+        };
+
+        $app['author.repository.cached'] = function () use ($app) {
+            return new \Performance\Infrastructure\AuthorRepositoryCached($app['predis.client'],$app['orm.em']->getRepository('Performance\Domain\Author'));
+        };
+        
+        $app['article.repository.cached'] = function () use ($app) {
+            return new \Performance\Infrastructure\ArticleRepositoryCached($app['predis.client'],$app['orm.em']->getRepository('Performance\Domain\Article'));
+        };
     }
 }

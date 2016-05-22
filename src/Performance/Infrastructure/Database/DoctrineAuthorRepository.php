@@ -27,7 +27,11 @@ QUERY;
     }
 
     public function save(Author $author) {
-        $this->_em->persist($author);
+        if (empty($author->getId())) {
+            $this->_em->persist($author);
+        } else {
+            $this->_em->merge($author);
+        }
         $this->_em->flush();
     }
 

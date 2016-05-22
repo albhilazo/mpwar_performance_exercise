@@ -9,7 +9,12 @@ use Performance\Domain\ArticleRepository;
 class DoctrineArticleRepository extends EntityRepository implements ArticleRepository
 {
     public function save(Article $article) {
-        $this->_em->persist($article);
+
+        if (empty($article->getId())) {
+            $this->_em->persist($article);
+        } else {
+            $this->_em->merge($article);
+        }
         $this->_em->flush();
     }
 

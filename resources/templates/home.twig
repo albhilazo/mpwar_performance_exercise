@@ -11,7 +11,9 @@
         <h1>Global Top 5 Ranking</h1>
         <ol>
             {% for article in globalRanking %}
-                <li>{{ article.title | title }}</li>
+                {% if article %}
+                    <li>{{ article.title | title }}</li>
+                {% endif %}
             {% else %}
                 <b>There are no articles in the top 5</b>
             {% endfor %}
@@ -22,7 +24,9 @@
             <h1>User Top 5 Ranking</h1>
             <ol>
                 {% for article in userRanking %}
-                    <li>{{ article.title | title }}</li>
+                    {% if article %}
+                        <li>{{ article.title | title }}</li>
+                    {% endif %}
                 {% else %}
                     <b>There are no articles in the top 5</b>
                 {% endfor %}
