@@ -1,5 +1,7 @@
 # Exercise summary
 
+![alt text](journals/informes/informeEvolucion.png "Performance evolution")
+
  - Ansible and Ansistrano configuration files were added to deploy the application in production servers. These files install and start the necessary services and install application dependencies with Composer.
  - MySQL and Redis services are deployed in a separated instance
  - Application styles (defined and compiled using LESS) have been optimized with [clean-css](https://github.com/jakubpawlowicz/clean-css).
