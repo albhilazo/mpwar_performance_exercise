@@ -30,3 +30,4 @@ $app['redis.options'] = [
     "port"   => 6379
 ];
 $app['assets_path'] = 'http://performance.dev/mpwar_performance_exercise/web/assets';
+$app['img_path']    = 'https://s3-eu-west-1.amazonaws.com/mpwarperf';
