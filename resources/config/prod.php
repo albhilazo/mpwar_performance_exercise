@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/parameters.php';
+
 date_default_timezone_set('Europe/Madrid');
 
 $app['twig.path'] = array(__DIR__ . '/../templates');
@@ -7,9 +9,9 @@ $app['twig.options'] = [];
 
 $app['db.options'] = [
     "driver"    => "pdo_mysql",
-    "host"      => '52.30.109.150',
-    "user"      => 'mpwar',
-    "password"  => 'performance_pass',
+    "host"      => $app['db.host'],
+    "user"      => $app['db.user'],
+    "password"  => $app['db.password'],
     "dbname"    => 'mpwar_performance_blog',
     "charset"   => "utf8"
 ];
@@ -26,8 +28,6 @@ $app['orm.em.options'] = [
 ];
 $app['redis.options'] = [
     "scheme" => "tcp",
-    "host"   => "52.30.109.150",
-    "port"   => 6379
+    "host"   => $app['redis.host'],
+    "port"   => $app['redis.port'],
 ];
-$app['assets_path'] = 'http://performance.dev/mpwar_performance_exercise/web/assets';
-$app['img_path']    = 'https://s3-eu-west-1.amazonaws.com/mpwarperf';

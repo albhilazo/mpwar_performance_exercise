@@ -71,13 +71,17 @@ class DomainServiceProvider implements ServiceProviderInterface
 
         $app['s3.client'] = function () use ($app) {
             return new \Aws\S3\S3Client([
-                'region'  => 'eu-west-1',
+                'credentials' => [
+                    'key'    => $app['aws.key'],
+                    'secret' => $app['aws.secret'],
+                ],
+                'region'  => $app['s3.region'],
                 'version' => 'latest',
             ]);
         };
 
         $app['filesystem.adapter'] = function () use ($app) {
-            return new \League\Flysystem\AwsS3v3\AwsS3Adapter($app['s3.client'], 'mpwarperf');
+            return new \League\Flysystem\AwsS3v3\AwsS3Adapter($app['s3.client'], $app['s3.bucket.name']);
         };
 
         $app['filesystem.handler'] = function () use ($app) {
