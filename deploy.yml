@@ -7,5 +7,10 @@
     ansistrano_deploy_to: "/var/www/html"
     ansistrano_keep_releases: 3
     ansistrano_allow_anonymous_stats: false
+    blackfire_server_id: ***
+    blackfire_server_token: ***
+    blackfire_apache_enable: true
+    blackfire_php_fpm_enable: false
   roles:
-    - carlosbuenosvinos.ansistrano-deploy
+    - { role: carlosbuenosvinos.ansistrano-deploy }
+    - { role: AbdoulNdiaye.Blackfire, sudo: yes }
